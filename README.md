@@ -36,20 +36,20 @@ Todo ello pensado para facilitar el acceso a recursos educativos a todo aquel es
 <a name="fsd"></a>
 ### Fundamentos de Sistemas Digitales (FSD)
 
-* [PEC 1](#)
-* [PEC 2](#)
+* [PEC 1](https://github.com/salvaMsanchez/ingenieria-informatica-uned/blob/main/Curso_1/FSD/PEC1_MORENO_SANCHEZ_SALVADOR.pdf)
+* [PEC 2](https://github.com/salvaMsanchez/ingenieria-informatica-uned/blob/main/Curso_1/FSD/PEC2_MORENO_SANCHEZ_SALVADOR.pdf)
 
 <a name="ici"></a>
 ### Ingeniería de Computadores I (ICI)
 
-* [PED 1](#)
-* [PED 2](#)
+* [PED 1](https://github.com/salvaMsanchez/ingenieria-informatica-uned/blob/main/Curso_1/IC_I/PED1_MORENO_SANCHEZ_SALVADOR.pdf)
+* [PED 2](https://github.com/salvaMsanchez/ingenieria-informatica-uned/blob/main/Curso_1/IC_I/PED2_MORENO_SANCHEZ_SALVADOR.pdf)
 
 <a name="poo"></a>
 ### Programación Orientada a Objetos (POO)
 
-* [PEC - Documento](#)
-* [PEC - Código Java](#)
+* [PEC - Documento](https://github.com/salvaMsanchez/ingenieria-informatica-uned/blob/main/Curso_1/POO/PEC_MORENO_SANCHEZ_SALVADOR.pdf)
+* [PEC - Código Java](https://github.com/salvaMsanchez/ingenieria-informatica-uned/tree/main/Curso_1/POO/practicaPec/cooperativa)
 
 <a name="segundoCurso"></a>
 ## Segundo curso
