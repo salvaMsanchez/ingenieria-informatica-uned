@@ -1,0 +1,11 @@
+producto,rendimiento,valorReferencia,grupo
+fresas,30,4.00,perecedero
+melones,20,0.90,perecedero
+lechugas,15,1.50,perecedero
+tomates,25,2.20,perecedero
+zanahorias,40,0.80,perecedero
+arroz,5,0.50,noPerecedero
+maiz,3,0.35,noPerecedero
+aceite de oliva,2.5,10.00,noPerecedero
+garbanzos,1.5,1.80,noPerecedero
+anacardos,2.5,5.00,noPerecedero
