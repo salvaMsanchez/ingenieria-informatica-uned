@@ -22,6 +22,7 @@
 * [Segundo curso](#segundoCurso)
 	* [Bases de Datos (BBDD)](#bbdd)
 	* [Teoría de los Lenguajes de Programación (TLP)](#tlp)
+	* [Aproximación a la Ingeniería de Software (AIS)](#ais)
 
 <a name="proposito"></a>
 ## Propósito
@@ -57,8 +58,21 @@ Todo ello pensado para facilitar el acceso a recursos educativos a todo aquel es
 <a name="bbdd"></a>
 ### Bases de Datos (BBDD)
 
+* [Caso Práctico - Memoria](https://github.com/salvaMsanchez/ingenieria-informatica-uned/blob/main/Curso_2/BBDD/CasoPractico/moreno_sanchez_salvador.pdf)
+* [Caso Práctico - Código SQL](https://github.com/salvaMsanchez/ingenieria-informatica-uned/blob/main/Curso_2/BBDD/CasoPractico/moreno_sanchez_salvador.sql)
+
 <a name="tlp"></a>
 ### Teoría de los Lenguajes de Programación (TLP)
+
+* [PEC - Memoria](https://github.com/salvaMsanchez/ingenieria-informatica-uned/blob/main/Curso_2/TLP/TLP_PEC_MORENO_SANCHEZ_SALVADOR/Memoria/Memoria_Moreno_Sanchez_Salvador.pdf)
+* [PEC - Código Haskell](https://github.com/salvaMsanchez/ingenieria-informatica-uned/tree/main/Curso_2/TLP/TLP_PEC_MORENO_SANCHEZ_SALVADOR)
+* [Ejercicios con Haskell para practicar el lenguaje](https://github.com/salvaMsanchez/ingenieria-informatica-uned/tree/main/Curso_2/TLP/Haskell)
+
+<a name="ais"></a>
+### Aproximación a la Ingeniería de Software (AIS)
+
+* [PEC - Documento de Diseño del Proyecto](https://github.com/salvaMsanchez/ingenieria-informatica-uned/blob/main/Curso_2/AIS/PEC_Design/PEC_DISENO_MORENO_SANCHEZ_SALVADOR.pdf)
+* [PEC - Ejecución del Proyecto a partir del diseño de un compañero (realizado en Python)](https://github.com/salvaMsanchez/ingenieria-informatica-uned/tree/main/Curso_2/AIS/PEC_Code)
 	
 ---
 
