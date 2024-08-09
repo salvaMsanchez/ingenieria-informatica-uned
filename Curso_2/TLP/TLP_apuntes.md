@@ -1,9 +1,5 @@
 # TLP
 
-## Preparación para Septiembre 🚀
-
-### Conceptos 🈲
-
 ---
 
 * **¿Cuál es el objetivo de un análisis léxico?**
