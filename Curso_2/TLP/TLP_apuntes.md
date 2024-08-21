@@ -2,6 +2,44 @@
 
 ---
 
+* **Defina en qué consiste el léxico, la sintaxis y la semántica de un lenguaje de programación. Ilustre las definiciones con algún ejemplo**
+
+	* El léxico o conjunto de las "palabras" o unidades léxicas que son las cadenas de caracteres significativas del lenguaje, también denominados tokens. También son unidades léxicas los identificadores, los símbolos especiales de operadores y los símbolos de puntuación. Por ejemplo, una sentencia condicional en C tendría como tokens las cadenas if y else.
+	* La sintaxis conlleva la descripción de los diferentes componentes del lenguaje y de sus combinaciones posibles. Para ello se utilizan las gramáticas libres de contexto. Por ejemplo, la sentencia if en C se define por:
+
+			<sentencia if> ::= if ( <expresion> ) <sentencia> [else < sentencia>]
+	
+	* La semántica expresa los efectos de la ejecución en un contexto determinado. Siguiendo con el ejemplo del if en C, y según Kernighan y Richie:
+
+		"Una sentencia if es ejecutada, primero, evaluando su expresión, que debe ser de tipo aritmético o apuntador, y si el resultado de la comparación de la expresión es cierta, entonces se ejecuta la sentencia que sigue a la expresión. Si existe una parte else y el resultado de la expresión no es cierto, entonces se ejecuta la sentencia que sigue al else."
+
+* **Indique de qué se ocupa cada una de las fases de análisis que llevan a cabo los intérpretes y compiladores y relaciónelas con los conceptos definidos en la pregunta anterior**
+
+	Las fases que tanto un intérprete como un compilador deben llevar a cabo son:  	1. Primero, un analizador léxico debe identificar los tokens del programa, ya que inicialmente el programa se entiende como una secuencia de caracteres.
+	2. A continuacion, un analizador sintáctico o gramatical identifica las estructuras correctas que definen las secuencias de tokens.
+	3. Finalmente, un analizador semántico asigna el significado de forma suficinete para su ejecución o la obtención del programa objetivo.
+
+---
+
+**Imaginemos un lenguaje que admita definición de subprogramas,
+pero todos ellos al mismo nivel (como en el caso de C), es decir, que no puedan anidarse subprogramas unos dentro de otros (como sí permite Pascal).**
+
+* **Describa qué información deberá almacenarse en los registros de activación de los subprogramas, de forma que pueda gestionarse correctamente la ejecución.**
+
+	Debemos estrucutrar los registros de activación en una pila de registros de activación. Cada vez que se llama a un subprograma, se apila a un nuevo registro de activación que será liberado cuando se termine la ejecución del subprograma.
+	
+	En cada uno de estos registros de activación será necesario almacenar la misma información ya almacenada en un registro de activación para un ambiente estático, esto es, variables locales, dirección de retorno del subprograma, y parámetros.
+	
+	Sin embargo esto no basta, ya que como ahora los registros de activación son creados de forma dinámica también es necesario almacenar la información sobre dónde comienza el registro de activación del subprograma que actualmente se está ejecutando. Esta información se debe alamcenar externamente a la pila de registros de activación, normalmente en un registro que se conoce con el nombre de puntero de ambiente (o environment pointer, ep).
+	
+	Además, cada registro de activación deberá almacenar adicionalmente la dirección de inicio del registro de activiación del subprograma invocador, de forma que se pueda restaurar el valor del puntero de ambiente al salir del subprograma y volver al invocador. Esta información debe estar presente en todos los registros de activación y se conoce con el nom,bre de enlace de control (o enlace dinámico), pues se encarga de devolver el conrtol al subprograma que llamó al actual.
+
+* **Describa cómo se organizan esos registros de activación para una correcta ejecución de los programas. Ponga un ejemplo en el que se vea esta organización.**
+
+	Pág. 272, 273, 274, 275
+
+---
+
 * **¿Cuál es el objetivo de un análisis léxico?**
 	
 	El análisis léxico identifica las secuencias de tokens "correctas" en el lenguaje, y tras el análisis sintáctico, son las que forman la estructura sintáctica de un programa (combinaciones correctas" de tokens).
