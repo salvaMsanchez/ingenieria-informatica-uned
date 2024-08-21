@@ -40,6 +40,92 @@ pero todos ellos al mismo nivel (como en el caso de C), es decir, que no puedan 
 
 ---
 
+**Para las siguientes expresiones:**
+
+a) 23 * (2 + 11) - 1
+
+b) ( 4 - 1 ) / ( 7 - 5 )
+
+**Detalle:**
+
+1. **El árbol sintáctico abstracto de la expresión.**
+
+a)
+
+		  -
+	     / \
+	   *    1
+	  / \
+	 23  +
+	    / \
+	   2   11
+
+b)
+
+		  /
+	     / \
+	   -    -
+	  / \  / \
+	 4   1 7  5
+
+
+2. **A partir del árbol sintáctico, construya la expresión postfija.**
+
+a)
+
+		23 2 11 + * 1 -
+		
+b)
+
+		4 1 - 7 5 - /
+
+3. **A partir de la expresión postfija, indique al lista de instrucciones de una máquina pila para poder evaluar la expresión.**
+
+	Para evaluar expresiones en notación postfija utilizando una máquina de pila, la máquina sigue una serie de instrucciones que operan sobre una pila de operandos. Las instrucciones básicas son:
+
+* PUSH X: Coloca el valor X en la pila.
+* ADD: Suma los dos valores en la parte superior de la pila y empuja el resultado en la pila.
+* SUB: Resta los dos valores en la parte superior de la pila (resta el segundo valor al primero).
+* MUL: Multiplica los dos valores en la parte superior de la pila y empuja el resultado en la pila.
+* DIV: Divide los dos valores en la parte superior de la pila (divide el segundo valor por el primero) y empuja el resultado en la pila.
+
+**Expresión 1: 23 2 11 + * 1 -**
+
+* PUSH 23: Coloca 23 en la pila.
+* PUSH 2: Coloca 2 en la pila.
+* PUSH 11: Coloca 11 en la pila.
+* ADD: Suma los dos valores superiores de la pila (2 + 11), coloca el resultado (13) en la pila.
+* MUL: Multiplica los dos valores superiores de la pila (23 * 13), coloca el resultado (299) en la pila.
+* PUSH 1: Coloca 1 en la pila.
+* SUB: Resta los dos valores superiores de la pila (299 - 1), coloca el resultado (298) en la pila.
+
+**Expresión 2: 4 1 - 7 5 - /**
+
+* PUSH 4: Coloca 4 en la pila.
+* PUSH 1: Coloca 1 en la pila.
+* SUB: Resta los dos valores superiores de la pila (4 - 1), coloca el resultado (3) en la pila.
+* PUSH 7: Coloca 7 en la pila.
+* PUSH 5: Coloca 5 en la pila.
+* SUB: Resta los dos valores superiores de la pila (7 - 5), coloca el resultado (2) en la pila.
+* DIV: Divide los dos valores superiores de la pila (3 / 2), coloca el resultado (1.5) en la pila.
+
+c) **Responda las siguientes preguntas: ¿con qué recorrido del árbol sintáctico abstracto se corresponde la expresión postfija? ¿Y la infija?**
+
+**Recorrido del Árbol Sintáctico para la Expresión Postfija**
+
+* Postfija (Postorden): La expresión postfija se corresponde con un recorrido postorden del árbol sintáctico abstracto.
+En un recorrido postorden (postorder traversal):
+
+	Se visita primero el subárbol izquierdo. Luego se visita el subárbol derecho. Finalmente, se procesa el nodo raíz. Este orden de recorrido genera una secuencia donde los operandos se colocan antes de sus respectivos operadores, lo cual es la característica fundamental de la notación postfija.
+	
+**Recorrido del Árbol Sintáctico para la Expresión Infija**
+
+* Infija (Inorden): La expresión infija se corresponde con un recorrido inorden del árbol sintáctico abstracto. En un recorrido inorden (inorder traversal):
+
+	Se visita primero el subárbol izquierdo. Luego se procesa el nodo raíz. Finalmente, se visita el subárbol derecho. Este recorrido genera la notación estándar o infija, donde los operadores están colocados entre sus operandos, lo cual es lo que estamos acostumbrados a ver en las expresiones aritméticas tradicionales.
+
+---
+
 * **¿Cuál es el objetivo de un análisis léxico?**
 	
 	El análisis léxico identifica las secuencias de tokens "correctas" en el lenguaje, y tras el análisis sintáctico, son las que forman la estructura sintáctica de un programa (combinaciones correctas" de tokens).
