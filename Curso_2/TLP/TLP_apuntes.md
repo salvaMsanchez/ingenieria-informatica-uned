@@ -1,5 +1,196 @@
 # TLP
 
+---
+
+**Sea la siguiente función escrita en Haskell:**
+
+	myMap f (x:y:zs) = (f x y):(myMap f ((f x y):zs))
+
+a) **Deduzca, razonadamente, el tipo de la función myMap.**
+
+La función `myMap` se define como:
+
+```haskell
+myMap f (x:y:zs) = (f x y):(myMap f ((f x y):zs))
+```
+
+Para deducir el tipo de `myMap`, examinemos los elementos y las operaciones involucradas:
+
+1. **Patrón `(x:y:zs)`**:
+   - Esto implica que la función `myMap` opera sobre una lista que tiene al menos dos elementos, donde `x` es el primer elemento, `y` es el segundo elemento, y `zs` es el resto de la lista.
+
+2. **`f x y`**:
+   - Aquí, `f` es una función que toma dos argumentos (`x` y `y`) y produce un resultado.
+   - Entonces, si `x` tiene el tipo `a` e `y` tiene el tipo `a`, entonces `f` debe tener el tipo `a -> a -> b`, donde `b` es el tipo del resultado.
+
+3. **Expresión `(f x y):(myMap f ((f x y):zs))`**:
+   - `(f x y)` es un valor de tipo `b`.
+   - `myMap f ((f x y):zs)` es una llamada recursiva a `myMap` con la lista `((f x y):zs)`.
+   - Esto significa que `myMap f` debe devolver una lista de elementos de tipo `b`.
+
+4. **Conclusión**:
+   - El tipo de `myMap` debe ser una función que toma un `f` (de tipo `a -> a -> b`) y una lista de tipo `[a]`, y devuelve una lista de tipo `[b]`.
+
+Entonces, el tipo de la función `myMap` es:
+
+```haskell
+myMap :: (a -> a -> b) -> [a] -> [b]
+```
+
+b) **¿La función myMap puede operar sobre cualquier lista? Justifique su respuesta.**
+
+**No**, la función `myMap` **no** puede operar sobre cualquier lista. 
+
+**Justificación:**
+
+- `myMap` requiere que la lista de entrada tenga al menos dos elementos. Esto se debe a que en la definición se utiliza el patrón `(x:y:zs)`, que empareja la lista con al menos dos elementos (`x` y `y`). Si se le proporciona una lista con menos de dos elementos, la función no tendrá una coincidencia de patrón válida y generará un error en tiempo de ejecución debido a la falta de un caso base para manejar listas vacías o listas con un solo elemento.
+
+c) **Defina los siguientes conceptos propios de la programación funcional e indique justificadamente si puede usarse la función myMap como ejemplo de los mismos:**
+
+* **Evaluación Perezosa:** es una característica de algunos lenguajes de programación funcionales (como Haskell) que retrasa la evaluación de una expresión hasta que su valor es necesario. Esto permite la definición de estructuras de datos infinitas y optimiza el rendimiento al evitar cálculos innecesarios.
+
+	**¿Puede `myMap` usarse como ejemplo?**
+
+	- **Sí**, `myMap` puede usarse como ejemplo de evaluación perezosa. Aunque `myMap` genera recursivamente una nueva lista, Haskell no evaluará cada elemento de esta lista hasta que sea necesario. Esto es útil si solo se necesita una parte de la lista resultante, ya que se evitará calcular el resto de los elementos.
+
+* **Currificación:** es el proceso de transformar una función que toma múltiples argumentos en una secuencia de funciones que toman un solo argumento. En Haskell, todas las funciones son curriables por defecto, lo que permite aplicar parcialmente funciones con menos argumentos de los esperados.
+
+	**¿Puede `myMap` usarse como ejemplo?**
+
+	- **No directamente**, `myMap` no se usa específicamente como ejemplo de currificación. Aunque `myMap` toma dos argumentos, el primero es una función binaria `f`, y el segundo es una lista. La currificación se refiere más a la capacidad de aplicar parcialmente una función, lo cual no es el foco principal de `myMap`. Sin embargo, si quisiéramos aplicar parcialmente la función `f` que se pasa a `myMap`, podríamos hacerlo, pero eso sería un ejemplo de currificación aplicada a `f`, no a `myMap` en sí.
+
+---
+
+**Dada la siguiente gramática:**
+
+	<exp> ::= <exp> + <exp> | <exp> - <exp> | <exp> * <exp> | <num>
+	<num> := <num><digito> | <digito>
+	<digito> ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+
+a) **Defina el concepto de gramática ambigua y explique cómo puede comprobarse si una gramática ol es. ¿Es ambigua la gramática dada? Justifique su respuesta.**
+
+**Definición de Gramática Ambigua:**
+
+- Una **gramática ambigua** es aquella en la que existe al menos una cadena de símbolos terminales (una sentencia) que puede tener más de un árbol sintáctico o más de una derivación izquierda o derecha. Esto significa que la gramática puede generar la misma expresión de manera diferente, lo cual puede dar lugar a diferentes interpretaciones semánticas.
+
+**¿Cómo comprobar si una gramática es ambigua?**
+
+- Para verificar si una gramática es ambigua, se deben generar las derivaciones y árboles sintácticos para diferentes expresiones. Si para una misma expresión existen dos (o más) árboles sintácticos diferentes, entonces la gramática es ambigua.
+
+**¿Es la gramática dada ambigua?**
+
+- Sí, la gramática dada es ambigua. Esto se debe a que una expresión como `1 + 2 * 3` puede interpretarse de diferentes maneras según la forma en que se agrupan las operaciones:
+
+1. **Primera interpretación:** `1 + (2 * 3)` con el árbol sintáctico correspondiente:
+   ```
+   <exp>
+   /   |    \
+ 1   +   <exp>
+        /  |  \
+     2  *  3
+   ```
+
+2. **Segunda interpretación:** `(1 + 2) * 3` con el árbol sintáctico correspondiente:
+   ```
+   <exp>
+   /  |  \
+<exp>  *  3
+ /  |  \
+1  +  2
+   ```
+Dado que `1 + 2 * 3` tiene más de un árbol sintáctico, la gramática es ambigua.
+
+b) **¿En qué notación está escrita esta gramática? Justifique su respuesta y utilice la gramática para explicar el significado de los metasímbolos utilizados por dicha notación para describir una gramática.**
+
+**Notación de la gramática:**
+
+- La gramática está escrita en **Forma de Backus-Naur** o **Notación BNF** (Backus-Naur Form). Esta notación es una forma común para describir la sintaxis de los lenguajes de programación.
+
+**Explicación de los metasímbolos utilizados:**
+
+- `<exp>`, `<num>`, y `<digito>` son **símbolos no terminales** que representan diferentes categorías gramaticales.
+- `::=`, el operador de definición, se utiliza para indicar que lo que está a la izquierda puede ser reemplazado por lo que está a la derecha. Define cómo se pueden expandir los símbolos no terminales.
+- `|` es el operador de elección, que permite que una producción tenga múltiples opciones.
+  
+**Ejemplo:**
+
+- La producción `<exp> ::= <exp> + <exp> | <exp> - <exp> | <exp> * <exp> | <num>` indica que una expresión (`<exp>`) puede ser una suma, una resta, una multiplicación de otras dos expresiones, o un número (`<num>`).
+
+c) **¿Puede dibujarse directamente esa gramática en forma de diagramas sintácticos? Justifique su respuesta (si e s afirmativa, dibuje la gramática en forma de diagramas sintácticos, si no lo es, explique los motivos).**
+
+**¿Puede dibujarse directamente esa gramática en forma de diagramas sintácticos?**
+
+- No se puede dibujar directamente como diagramas sintácticos debido a su ambigüedad. Los diagramas sintácticos (también conocidos como diagramas de sintaxis de Nassi-Shneiderman o diagramas de flujo de sintaxis) representan de forma gráfica las reglas de una gramática y requieren una estructura clara y no ambigua.
+
+**Justificación:**
+
+- Dado que la gramática es ambigua, el diagrama resultante sería complejo y podría mostrar caminos redundantes o conflictivos, lo que haría difícil la interpretación unívoca del flujo del diagrama.
+
+**Sin embargo**, si la gramática se modificara para ser no ambigua (por ejemplo, usando reglas de precedencia y asociatividad de operadores), sería posible representarla gráficamente en forma de diagramas sintácticos.
+
+**Ejemplo de modificación para evitar ambigüedad:**
+
+- Podríamos desambiguar la gramática dividiéndola en diferentes niveles de precedencia, como se muestra a continuación:
+
+```
+<exp> ::= <exp> + <term> | <exp> - <term> | <term>
+<term> ::= <term> * <factor> | <factor>
+<factor> ::= <num>
+<num> ::= <num> <digito> | <digito>
+<digito> ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+```
+
+- Con esta gramática, `1 + 2 * 3` se evaluaría siempre como `1 + (2 * 3)`, respetando la precedencia usual de los operadores. Ahora sí se podría representar de forma directa con diagramas sintácticos.
+
+---
+
+**Defina los siguientes conceptos, aportando un ejemplo en algún lenguaje de programación que los pueda ilustrar:**
+
+a) **Azúcar sintáctico:** término acuñado por Peter Landin en 1964 para describir aquellas estructuras sintácticas que no añaden expresividad al lenguaje, pero facilitan la escritura de los programas ofreciendo alternativas para que el programador pueda escoger. Un ejemplo se puede encontrar en las diferentes versiones de bucles que ofrecen los lenguajes de programación.
+
+b) **Error Sintáctico:** ocurre cuando el código fuente de un programa viola las reglas gramaticales del lenguaje de programación. Estos errores son detectados por el compilador o intérprete durante la fase de análisis sintáctico y normalmente impiden que el programa sea ejecutado.
+
+```python
+if x > 10
+    print("x is greater than 10")
+```
+
+En el ejemplo anterior, falta un símbolo de dos puntos (`:`) al final de la línea `if x > 10`. Esto es un error sintáctico, ya que en Python, cada declaración `if` debe terminar con dos puntos antes de proceder con el bloque de código. El intérprete de Python arrojará un error indicando que hay un problema de sintaxis.
+
+c) **Error Semántico:** ocurre cuando el código fuente, aunque sea sintácticamente correcto, produce un resultado incorrecto o no deseado debido a un problema en la lógica del programa. Estos errores no son detectados por el compilador, ya que el código es gramaticalmente válido, pero el programa no hace lo que se esperaba.
+
+```python
+x = 10
+y = 0
+z = x / y
+print(z)
+```
+
+Aunque este código es sintácticamente correcto, intentará dividir un número entre cero (`x / y` donde `y = 0`), lo cual es un error semántico. En este caso, se trata de un error de lógica aritmética. En muchos lenguajes, esto resultará en un error de ejecución (por ejemplo, una excepción de división por cero en Python).
+
+d) **Estado del cómputo:** se refiere a la colección de valores de todas las variables, el contenido de la memoria, y la posición en el código (instrucción actual o próxima a ejecutar) en un momento dado durante la ejecución de un programa. En otras palabras, es una instantánea del estado de todas las partes relevantes del programa en un punto específico durante su ejecución.
+
+```c
+int a = 5;
+int b = 10;
+int sum = a + b;
+```
+
+- Supongamos que el programa ha ejecutado la primera y segunda línea, pero aún no ha ejecutado la tercera. En este punto, el **estado del cómputo** sería:
+  - `a = 5`
+  - `b = 10`
+  - `sum` no tiene valor asignado aún.
+  
+  Si luego se ejecuta la tercera línea, el **estado del cómputo** cambia a:
+  
+  - `a = 5`
+  - `b = 10`
+  - `sum = 15`
+  
+  Este concepto es importante para entender cómo un programa avanza y cómo las variables y la memoria cambian a lo largo de la ejecución.
+
+---
+
 **Dado el siguiente código en Pascal:**
 
 	function f1(x:integer):integer; 
