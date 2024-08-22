@@ -1,5 +1,234 @@
 # TLP
 
+**Dado el siguiente código en Pascal:**
+
+	function f1(x:integer):integer; 
+		function f2():integer; 
+			function f3():integer; 
+				begin
+					f3:=x; 
+				end; 
+			begin
+				f2:=f3; 
+			end; 
+		begin
+			f1:=f2;
+		end;
+
+
+a) **Rellene la siguiente tabla que indica la visibilidad de las declaraciones de las funciones f1, f2 y f3:**
+
+Vamos a completar la tabla de visibilidad basándonos en el ámbito de cada función en el código proporcionado. Recuerda que en Pascal, una función es visible dentro de la función en la que está declarada y en las funciones anidadas dentro de ella, pero no fuera de su ámbito.
+
+|                        | ...dentro de `f1` | ...dentro de `f2` | ...dentro de `f3` |
+|------------------------|-------------------|-------------------|-------------------|
+| **`f1` es visible...** | Sí                | No                | No                |
+| **`f2` es visible...** | Sí                | Sí                | No                |
+| **`f3` es visible...** | Sí                | Sí                | Sí                |
+
+**Explicación:**
+
+- `f1` es la función más externa y, por lo tanto, es visible solo en su propio ámbito.
+- `f2` está declarada dentro de `f1`, por lo que es visible dentro de `f1` y dentro de `f2`, pero no dentro de `f3` porque `f3` está más interna.
+- `f3` está declarada dentro de `f2`, por lo que es visible en su propio ámbito, en el ámbito de `f2` (que lo contiene), y también en `f1`, ya que `f1` contiene a `f2` y, por ende, a `f3`.
+
+b) **¿Existe alguna referencia no local dentro del código? En caso afirmativo describa cómo puede resolverse.**
+
+Sí, existe una referencia no local. La función `f3` accede a la variable `x`, que no está declarada dentro de `f3`, sino en `f1`. 
+
+**Resolución de la referencia no local:**
+
+- Esta referencia no local se resuelve utilizando la regla de alcance estático o léxico. En este caso, `x` es capturada en el entorno donde `f3` fue definida, es decir, dentro de `f1`. Esto significa que cuando `f3` se ejecuta, accede al valor de `x` que está en el ámbito de `f1`, el cual es accesible porque `f3` está anidada dentro de `f2`, que a su vez está anidada dentro de `f1`.
+
+c) **Defina el concepto de subprograma en forma cerrada e indique si f3 lo es o no. Explique el porqué.**
+
+**Concepto de Subprograma en Forma Cerrada:**
+
+- Un **subprograma en forma cerrada** es aquel que no accede a ninguna variable que no esté definida en su propio ámbito, es decir, no realiza referencias no locales. Todas las variables que usa están declaradas dentro del subprograma mismo o pasadas como parámetros.
+
+**¿`f3` es un subprograma en forma cerrada?**
+
+- **No**, `f3` no es un subprograma en forma cerrada porque accede a la variable `x`, que no está declarada dentro de `f3`. La variable `x` pertenece al ámbito de `f1`, lo que significa que `f3` depende de una variable no local, lo cual rompe la característica de ser un subprograma en forma cerrada.
+
+---
+
+**Defina los conceptos relacionados con la semántica de los lenguajes de programación siguientes y ponga un ejemplo para cada uno de ellos:**
+
+a) **Declaración:** instrucción que introduce un identificador (como una variable, constante, función o tipo) y asocia ese identificador con un valor, tipo o estructura de datos. La declaración informa al compilador o intérprete sobre la existencia de ese identificador y, en algunos casos, puede también inicializarlo con un valor.
+
+	int x;         // Declara una variable 'x' de tipo entero sin inicializar.
+	float y = 3.14; // Declara una variable 'y' de tipo flotante e inicializa con 3.14.
+
+
+b) **Bloque:** un bloque es una secuencia de declaraciones seguidas por una secuencia de sentencias y rodeado de marcadores, como llaves o pares de inicio y fin. En C, los bloques se denominan sentencias compuestas y aparecen en el cuerpo de las definiciones de una función y en cualquier otra parte de un programa en que podría aparecer una sentencia ordinaria.
+
+	void p (void) {
+		double r, z; /* bloque de p hasta la última llave */
+		...
+		{ int x, y; /* bloque anidado entre llaves */
+			x = 2; y = 0; x += 1;
+		}
+		...
+	}
+
+c) **Alcance (o ámbito) de un vínculo:** región del programa en la que se conserva un vínculo en concreto. En la mayoría de los lenguajes actuales estructurados en bloques (como C), en los que los bloques pueden anidarse, el alcance de un vínculo queda limitado al bloque en que aparece su declaración. Esta regla se conoce por alcance léxico. En el ejemplo siguiente de código C, las dos declaraciones del identificador x tienen significados y alcances diferentes:
+
+	void p (void) {
+		int x;
+		...
+	}
+	void q(void) {
+		char x;
+		...
+	}
+	
+
+d) **Tabla de símbolos:** estructura de datos utilizada por los compiladores e intérpretes para almacenar información sobre las declaraciones en un programa. Esta tabla asocia los nombres de variables, funciones, tipos, etc., con la información relevante sobre ellos, como su tipo, alcance, dirección de memoria, valor actual, y otros atributos. Durante la compilación o interpretación de un programa, la tabla de símbolos se utiliza para verificar la existencia de variables, funciones u otros identificadores y para realizar la comprobación de tipos. Ayuda a gestionar el alcance de los identificadores y facilita la generación de código.
+
+```c
+int a = 5;
+float b = 3.14;
+int c = a + 10;
+```
+
+La tabla de símbolos podría ser algo como:
+
+| Nombre | Tipo   | Valor | Alcance |
+|--------|--------|-------|---------|
+| a      | int    | 5     | global  |
+| b      | float  | 3.14  | global  |
+| c      | int    | 15    | global  |
+
+
+---
+
+**Programe en Haskell, utilizando listas por comprensión, las siguientes funciones:**
+
+a) **La función filter (cuyo tipo es filter :: (a -> Bool) -> [a] -> [a]) que elimina todos los elementos de una lista (2° parámetro) que no cumplen una condición representada mediante una función (1° parámetro).**
+
+La función filter elimina todos los elementos de una lista que no cumplen con una condición especificada por una función pasada como argumento.
+
+	myFilter :: (a -> Bool) -> [a] -> [a]
+	myFilter f xs = [x | x <- xs, f x]
+	
+Explicación:
+
+* f x es la condición que debe cumplir cada elemento x de la lista xs.
+* La lista por comprensión [x | x <- xs, f x] genera una nueva lista con los elementos x de xs que cumplen la condición f x.
+	
+b) **La función map (cuyo tipo es map :: (a -> b) -> [a] -> [b]) que aplica una
+función (1° parámetro) a todos los elementos de una lista (2° parámetro) para crear una nueva lista.**
+
+La función map aplica una función a todos los elementos de una lista para crear una nueva lista con los resultados.
+
+	myMap :: (a -> b) -> [a] -> [b]
+	myMap f xs = [f x | x <- xs]
+
+Explicación:
+
+* f x aplica la función f a cada elemento x de la lista xs.
+* La lista por comprensión [f x | x <- xs] genera una nueva lista con los resultados de aplicar f a cada elemento de xs.
+
+c) **La función concat (cuyo tipo es concat :: [[a]] -> [al) que concatena una lista de listas de elementos en una única lista.**
+
+La función concat toma una lista de listas y las concatena en una única lista.
+
+	myConcat :: [[a]] -> [a]
+	myConcat xss = [x | xs <- xss, x <- xs]
+
+Explicación:
+
+* xs <- xss itera sobre cada lista xs dentro de la lista de listas xss.
+* x <- xs itera sobre cada elemento x dentro de cada sublista xs.
+* La lista por comprensión [x | xs <- xss, x <- xs] genera una lista que contiene todos los elementos de las sublistas concatenados en una sola lista.
+
+d) **Una función parejas (cuyo tipo sea parejas :: [a] -> [(a,a)]) que devuelva la
+lista de todas las parejas diferentes que se pueden formar con los elementos de la lista de entrada. Por ejemplo:**
+
+	> parejas [1,2,3]
+	[(1,1), (1,2), (1,3), (2,1), (2,2), (2,3), 13,1), (3,2), (3,3)]
+	
+La función parejas devuelve la lista de todas las parejas posibles que se pueden formar con los elementos de la lista de entrada, incluyendo las combinaciones con elementos repetidos.
+
+	parejas :: [a] -> [(a, a)]
+	parejas xs = [(x, y) | x <- xs, y <- xs]
+
+Explicación:
+
+* x <- xs itera sobre cada elemento x de la lista xs.
+* y <- xs itera nuevamente sobre cada elemento y de la lista xs.
+* La lista por comprensión [(x, y) | x <- xs, y <- xs] genera todas las combinaciones posibles de parejas (x, y).
+
+---
+
+**Responda las siguientes preguntas:**
+
+* **Compare las listas de Haskell con las listas de Prolog. Describa su funcionamiento, semejanzas y diferencias.**
+
+	1. Funcionamiento de las Listas:
+
+	**Haskell:**
+
+	* Definición y Sintaxis: 
+
+		En Haskell, una lista es una secuencia ordenada de elementos del mismo tipo. Se denotan entre corchetes y separados por comas, por ejemplo: [1, 2, 3].
+
+	* Operaciones Básicas:
+
+		* Concatenación: Se utiliza el operador ++ para concatenar listas.
+		* Acceso: El operador !! se usa para acceder a un elemento en una posición específica.
+		* Cons (:): El operador : se usa para agregar un elemento al principio de una lista. Por ejemplo, 1 : [2, 3] resulta en [1, 2, 3].
+	* Inmutabilidad: Las listas en Haskell son inmutables, lo que significa que una vez que se crea una lista, no se puede modificar.
+	* Tipado: Haskell es un lenguaje fuertemente tipado y tiene inferencia de tipos, por lo que cada lista tiene un tipo específico, como [Int] para una lista de enteros.
+
+	**Prolog:**
+
+	* Definición y Sintaxis: En Prolog, una lista es también una secuencia ordenada de elementos, pero su sintaxis es diferente. Se escribe entre corchetes y los elementos están separados por comas, por ejemplo: [1, 2, 3].
+	* Operaciones Básicas:
+		* Concatenación: La concatenación de listas se realiza a menudo mediante recursión y patrones.
+		* Unificación: Las listas en Prolog utilizan unificación para patrones. Por ejemplo, [H|T] = [1, 2, 3] unifica H con 1 y T con [2, 3].
+		* Operador de Cabeza/Tail (|): El operador | divide una lista en su cabeza (primer elemento) y su cola (resto de la lista).
+	* Mutabilidad: En Prolog, aunque las listas pueden parecer mutables en ciertas construcciones, la operación realmente genera nuevas listas en el proceso de la unificación.
+	* Sin Tipado Estricto: Prolog no es un lenguaje fuertemente tipado, lo que significa que las listas pueden contener elementos de diferentes tipos, como [1, 'a', X].
+
+	2. Semejanzas:
+
+		* Ambas utilizan una notación similar para listas ([1, 2, 3]).
+		* Tanto Haskell como Prolog utilizan el concepto de cabeza y cola para operar sobre listas ([H|T] en Prolog y x:xs en Haskell).
+		* Las listas en ambos lenguajes pueden ser procesadas de manera recursiva.
+
+	3. Diferencias:
+
+		* Tipado: Haskell es fuertemente tipado, por lo que una lista debe contener elementos del mismo tipo, mientras que Prolog permite listas con elementos de tipos mixtos.
+		* Inmutabilidad: En Haskell, las listas son inmutables, lo que significa que cualquier operación sobre una lista genera una nueva lista, mientras que en Prolog, el concepto de mutabilidad es más flexible debido a la unificación.
+		* Operaciones: En Haskell, las operaciones de listas como la concatenación y la indexación están integradas como funciones básicas del lenguaje, mientras que en Prolog, estas operaciones suelen requerir la definición de reglas adicionales y el uso de recursión.
+
+* **Defina ycompare los lenguajes fuertemente tipados ylos débilmente tipados. Ponga un ejemplo de cada uno de ellos y comente las ventajas e inconvenientes de ambas aproximaciones.**
+
+	1. Lenguajes Fuertemente Tipados:
+
+		* Definición: En un lenguaje fuertemente tipado, el tipo de una variable es estrictamente respetado. No se permiten operaciones entre tipos incompatibles sin conversión explícita.
+		* Ejemplo: Haskell.
+			* En Haskell, si se tiene una variable de tipo Int, no se puede realizar una operación que espera un tipo String sin hacer una conversión explícita.
+			* Ventajas:
+				* Seguridad: Previene errores de tipo, lo que resulta en un código más robusto y predecible.
+				* Legibilidad: Facilita la comprensión del código, ya que el tipo de cada variable es claro y consistente.
+			* Inconvenientes:
+				* Flexibilidad: Puede ser menos flexible para operaciones donde se desearía una conversión automática.
+				* Verbosidad: A veces se requiere escribir código adicional para manejar conversiones entre tipos.
+
+	2. Lenguajes Débilmente Tipados:
+
+		* Definición: En un lenguaje débilmente tipado, el tipo de una variable puede ser fácilmente cambiado o interpretado de manera flexible, lo que permite operaciones entre tipos diferentes sin conversiones explícitas.
+		* Ejemplo: JavaScript.
+			* En JavaScript, se pueden sumar un número y una cadena sin conversión explícita, y el lenguaje manejará la conversión automáticamente, como 5 + '5' que resultará en '55'.
+			* Ventajas:
+				* Flexibilidad: Facilita la escritura de código más rápido y permite operar de manera más directa con diferentes tipos.
+				* Menor Verbosidad: Reduce la necesidad de conversiones explícitas, lo que puede simplificar el código en ciertos contextos.
+			* Inconvenientes:
+				* Seguridad: Puede conducir a errores sutiles y difíciles de detectar, ya que las conversiones automáticas pueden no siempre producir el resultado esperado.
+				* Mantenimiento: El código puede ser más difícil de mantener y depurar, ya que el tipo de las variables no siempre es claro o predecible.
+
 ---
 
 * **Defina en qué consiste el léxico, la sintaxis y la semántica de un lenguaje de programación. Ilustre las definiciones con algún ejemplo**
