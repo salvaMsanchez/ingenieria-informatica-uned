@@ -2,6 +2,22 @@
 
 ---
 
+**Defina los siguientes conceptos, incluyendo ejemplos de cada uno:**
+
+a) **Transparencia referencial:** si una expresión es referencialmente transparente, siempre devolverá el mismo resultado dado el mismo entorno (mismos valores de variables y funciones involucradas), sin importar dónde y cuándo se evalúe. Esta propiedad es fundamental en la programación funcional. 
+
+Ejemplo en Haskell:
+
+	square x = x * x
+	
+Aquí, la función square es referencialmente transparente. Si llamas a square 4, siempre devolverá 16, sin importar el contexto o cuántas veces se evalúe.
+
+La transparencia referencial es importante porque facilita el razonamiento sobre programas y la optimización. Por ejemplo, los compiladores pueden hacer optimizaciones como almacenar en caché resultados de funciones o reordenar expresiones sin preocuparse por efectos secundarios. Además, permite propiedades como la memoización (almacenamiento en caché de resultados de funciones) y es esencial para las pruebas y la refactorización del código, ya que facilita predecir y asegurar el comportamiento del programa.
+
+b) **Léxico, Sintaxis y Semántica como elementos fundamentales para la definición de un lenguaje de programación:** ya definido a lo largo del documento.
+
+---
+
 **Sea la siguiente función escrita en Haskell:**
 
 	myMap f (x:y:zs) = (f x y):(myMap f ((f x y):zs))
