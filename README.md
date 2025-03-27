@@ -55,6 +55,11 @@ Todo ello pensado para facilitar el acceso a recursos educativos a todo aquel es
 <a name="segundoCurso"></a>
 ## Segundo curso
 
+<a name="gei"></a>
+### Gestión de Empresas Informáticas (GEI)
+
+* [Test con preguntas de exámenes anteriores](https://www.daypo.com/uned-gestion-empresas-informaticas.html)
+
 <a name="bbdd"></a>
 ### Bases de Datos (BBDD)
 
